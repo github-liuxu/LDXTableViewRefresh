@@ -42,13 +42,12 @@
     self.refreshActivity.center = self.refreshImageView.center;
 }
 
-- (void)ldx_refreshOffsetY:(NSNumber *)offsetY {
-    CGFloat offsety = [offsetY floatValue];
-    if (offsety == 0) {
+- (void)ldx_refreshOffsetY:(CGFloat)offsetY {
+    if (offsetY == 0) {
         self.refreshImageView.transform = CGAffineTransformIdentity;
     }
     
-    if (offsety < 0) {
+    if (offsetY < 0) {
 
         
     }

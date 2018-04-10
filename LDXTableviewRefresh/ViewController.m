@@ -7,12 +7,15 @@
 //
 
 #import "ViewController.h"
+//#import "LDXRefreshController.h"
 #import "UITableView+LDXRefresh.h"
-#import "LDXTableViewHeaderView.h"
+//#import "UITableView+LDXLoadMore.h"
+//#import "LDXTableViewHeaderView.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>{
     UITableView *tableView;
     int a;
+//    LDXRefreshController *contrlloer;
 }
 
 @end
@@ -25,12 +28,19 @@
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 64)];
     topView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:topView];
-    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 414, 736) style:UITableViewStylePlain];
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 414, 736-64) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.rowHeight = 80;
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"abc"];
     [self.view addSubview:tableView];
+//    contrlloer = [[LDXRefreshController alloc] initWithTableView:tableView];
+//    __weak typeof(contrlloer) weakContrlloer = contrlloer;
+//    [contrlloer ldx_installRefreshBlock:^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [weakContrlloer ldx_finishRefresh];
+//        });
+//    }];
     __weak typeof(tableView) weakTableView = tableView;
     [tableView ldx_installRefreshBlock:^{
         NSLog(@"刷新");
@@ -38,12 +48,16 @@
             [weakTableView ldx_finishRefresh];
         });
     }];
-//    [tableView ldx_setRefreshOffset:-30];
-    [tableView ldx_setFinishStateDisplayTime:1];
-    LDXTableViewHeaderView *view = [[LDXTableViewHeaderView alloc] initWithFrame:CGRectMake(0, -87, 414, 78)];
-    view.center = CGPointMake(tableView.center.x, -78/2);
-    view.backgroundColor = [UIColor blueColor];
-    [tableView ldx_setCustomRefreshView:view];
+////    [tableView ldx_setRefreshOffset:-30];
+//    [tableView ldx_setFinishStateDisplayTime:1];
+//    LDXTableViewHeaderView *view = [[LDXTableViewHeaderView alloc] initWithFrame:CGRectMake(0, -87, 414, 78)];
+//    view.center = CGPointMake(tableView.center.x, -78/2);
+//    view.backgroundColor = [UIColor blueColor];
+//    [tableView ldx_setCustomRefreshView:view];
+    
+//    [tableView ldx_installLoadMoreBlock:^{
+//
+//    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

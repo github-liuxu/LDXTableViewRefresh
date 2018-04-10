@@ -13,8 +13,10 @@
 		0C817210207505A90098D546 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C81720F207505A90098D546 /* Assets.xcassets */; };
 		0C817213207505A90098D546 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C817211207505A90098D546 /* LaunchScreen.storyboard */; };
 		0C817216207505A90098D546 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C817215207505A90098D546 /* main.m */; };
-		0C817246207534070098D546 /* UITableView+LDXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C817245207534070098D546 /* UITableView+LDXRefresh.m */; };
 		0C81724920755D490098D546 /* LDXTableViewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C81724820755D490098D546 /* LDXTableViewHeaderView.m */; };
+		0C9411A0207921C4007ECDD1 /* LDXRefreshController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C94119F207921C4007ECDD1 /* LDXRefreshController.m */; };
+		0C9411A820793EB6007ECDD1 /* LDXLoadMoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9411A720793EB6007ECDD1 /* LDXLoadMoreController.m */; };
+		0C9411A920793FA6007ECDD1 /* UITableView+LDXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9411A220792723007ECDD1 /* UITableView+LDXRefresh.m */; };
 		135A3A63DB6EADCFE46261FB /* libPods-LDXTableviewRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABFB3D120904AF7449A355E /* libPods-LDXTableviewRefresh.a */; };
 /* End PBXBuildFile section */
 
@@ -30,10 +32,15 @@
 		0C817212207505A90098D546 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C817214207505A90098D546 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C817215207505A90098D546 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0C817244207534070098D546 /* UITableView+LDXRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+LDXRefresh.h"; sourceTree = "<group>"; };
-		0C817245207534070098D546 /* UITableView+LDXRefresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+LDXRefresh.m"; sourceTree = "<group>"; };
 		0C81724720755D490098D546 /* LDXTableViewHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXTableViewHeaderView.h; sourceTree = "<group>"; };
 		0C81724820755D490098D546 /* LDXTableViewHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LDXTableViewHeaderView.m; sourceTree = "<group>"; };
+		0C94119E207921C4007ECDD1 /* LDXRefreshController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXRefreshController.h; sourceTree = "<group>"; };
+		0C94119F207921C4007ECDD1 /* LDXRefreshController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LDXRefreshController.m; sourceTree = "<group>"; };
+		0C9411A120792722007ECDD1 /* UITableView+LDXRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+LDXRefresh.h"; sourceTree = "<group>"; };
+		0C9411A220792723007ECDD1 /* UITableView+LDXRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+LDXRefresh.m"; sourceTree = "<group>"; };
+		0C9411A520793155007ECDD1 /* LDXRefreshViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXRefreshViewProtocol.h; sourceTree = "<group>"; };
+		0C9411A620793EB6007ECDD1 /* LDXLoadMoreController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXLoadMoreController.h; sourceTree = "<group>"; };
+		0C9411A720793EB6007ECDD1 /* LDXLoadMoreController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LDXLoadMoreController.m; sourceTree = "<group>"; };
 		0F9E12F656EC1469E640C82A /* Pods-LDXTableviewRefresh.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LDXTableviewRefresh.release.xcconfig"; path = "Pods/Target Support Files/Pods-LDXTableviewRefresh/Pods-LDXTableviewRefresh.release.xcconfig"; sourceTree = "<group>"; };
 		3ABFB3D120904AF7449A355E /* libPods-LDXTableviewRefresh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LDXTableviewRefresh.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -62,8 +69,13 @@
 		0C59CA8F20761E04000B9FFC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0C817244207534070098D546 /* UITableView+LDXRefresh.h */,
-				0C817245207534070098D546 /* UITableView+LDXRefresh.m */,
+				0C9411A120792722007ECDD1 /* UITableView+LDXRefresh.h */,
+				0C9411A220792723007ECDD1 /* UITableView+LDXRefresh.m */,
+				0C94119E207921C4007ECDD1 /* LDXRefreshController.h */,
+				0C94119F207921C4007ECDD1 /* LDXRefreshController.m */,
+				0C9411A620793EB6007ECDD1 /* LDXLoadMoreController.h */,
+				0C9411A720793EB6007ECDD1 /* LDXLoadMoreController.m */,
+				0C9411A520793155007ECDD1 /* LDXRefreshViewProtocol.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -205,10 +217,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C9411A920793FA6007ECDD1 /* UITableView+LDXRefresh.m in Sources */,
 				0C81720B207505A80098D546 /* ViewController.m in Sources */,
+				0C9411A820793EB6007ECDD1 /* LDXLoadMoreController.m in Sources */,
+				0C9411A0207921C4007ECDD1 /* LDXRefreshController.m in Sources */,
 				0C817216207505A90098D546 /* main.m in Sources */,
 				0C81724920755D490098D546 /* LDXTableViewHeaderView.m in Sources */,
-				0C817246207534070098D546 /* UITableView+LDXRefresh.m in Sources */,
 				0C817208207505A80098D546 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
