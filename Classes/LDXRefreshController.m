@@ -12,7 +12,7 @@
 typedef enum : NSUInteger {
     LDXRefreshNormal,
     LDXRefreshRefreshing,
-    LDXRefreshRefreshFinish,
+    LDXRefreshFinish,
 } LDXRefreshState;
 
 @interface LDXRefreshView : UIView <LDXRefreshViewProtocol>
@@ -23,6 +23,7 @@ typedef enum : NSUInteger {
 - (void)ldx_refreshOffsetY:(CGFloat)offsetY;
 - (void)ldx_refreshing;
 - (void)ldx_refreshFinish;
+- (void)ldx_endRefresh;
 
 @end
 
@@ -50,6 +51,10 @@ typedef enum : NSUInteger {
     self.label.text = @"完成刷新";
 }
 
+- (void)ldx_endRefresh {
+    self.label.text = @"下拉刷新";
+}
+
 @end
 
 @interface LDXRefreshController ()
@@ -64,6 +69,10 @@ typedef enum : NSUInteger {
 @end
 
 @implementation LDXRefreshController
+
+- (void)dealloc {
+    [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
+}
 
 - (instancetype)initWithTableView:(UITableView *)tableView {
     if (self = [super init]) {
@@ -88,12 +97,13 @@ typedef enum : NSUInteger {
 
 - (void)ldx_finishRefresh {
     [self.refreshView performSelector:@selector(ldx_refreshFinish)];
-    self.refreshState = LDXRefreshRefreshFinish;
+    self.refreshState = LDXRefreshFinish;
     
     [UIView animateWithDuration:0.3 delay:self.refreshFinishStateTime options:UIViewAnimationOptionTransitionNone animations:^{
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     } completion:^(BOOL finished) {
         self.refreshState = LDXRefreshNormal;
+        [self.refreshView performSelector:@selector(ldx_endRefresh)];
     }];
 }
 

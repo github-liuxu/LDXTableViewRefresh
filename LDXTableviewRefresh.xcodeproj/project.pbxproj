@@ -17,6 +17,7 @@
 		0C9411A0207921C4007ECDD1 /* LDXRefreshController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C94119F207921C4007ECDD1 /* LDXRefreshController.m */; };
 		0C9411A820793EB6007ECDD1 /* LDXLoadMoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9411A720793EB6007ECDD1 /* LDXLoadMoreController.m */; };
 		0C9411A920793FA6007ECDD1 /* UITableView+LDXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9411A220792723007ECDD1 /* UITableView+LDXRefresh.m */; };
+		0CBBCE5E207D2AA800BE0B53 /* UITableView+LDXLoadMore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBBCE5D207D2AA800BE0B53 /* UITableView+LDXLoadMore.m */; };
 		135A3A63DB6EADCFE46261FB /* libPods-LDXTableviewRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABFB3D120904AF7449A355E /* libPods-LDXTableviewRefresh.a */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,9 @@
 		0C9411A520793155007ECDD1 /* LDXRefreshViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXRefreshViewProtocol.h; sourceTree = "<group>"; };
 		0C9411A620793EB6007ECDD1 /* LDXLoadMoreController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXLoadMoreController.h; sourceTree = "<group>"; };
 		0C9411A720793EB6007ECDD1 /* LDXLoadMoreController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LDXLoadMoreController.m; sourceTree = "<group>"; };
+		0CBBCE5B207D29E100BE0B53 /* LDXLoadMoreViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDXLoadMoreViewProtocol.h; sourceTree = "<group>"; };
+		0CBBCE5C207D2AA800BE0B53 /* UITableView+LDXLoadMore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+LDXLoadMore.h"; sourceTree = "<group>"; };
+		0CBBCE5D207D2AA800BE0B53 /* UITableView+LDXLoadMore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+LDXLoadMore.m"; sourceTree = "<group>"; };
 		0F9E12F656EC1469E640C82A /* Pods-LDXTableviewRefresh.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LDXTableviewRefresh.release.xcconfig"; path = "Pods/Target Support Files/Pods-LDXTableviewRefresh/Pods-LDXTableviewRefresh.release.xcconfig"; sourceTree = "<group>"; };
 		3ABFB3D120904AF7449A355E /* libPods-LDXTableviewRefresh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LDXTableviewRefresh.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -71,11 +75,14 @@
 			children = (
 				0C9411A120792722007ECDD1 /* UITableView+LDXRefresh.h */,
 				0C9411A220792723007ECDD1 /* UITableView+LDXRefresh.m */,
+				0CBBCE5C207D2AA800BE0B53 /* UITableView+LDXLoadMore.h */,
+				0CBBCE5D207D2AA800BE0B53 /* UITableView+LDXLoadMore.m */,
 				0C94119E207921C4007ECDD1 /* LDXRefreshController.h */,
 				0C94119F207921C4007ECDD1 /* LDXRefreshController.m */,
 				0C9411A620793EB6007ECDD1 /* LDXLoadMoreController.h */,
 				0C9411A720793EB6007ECDD1 /* LDXLoadMoreController.m */,
 				0C9411A520793155007ECDD1 /* LDXRefreshViewProtocol.h */,
+				0CBBCE5B207D29E100BE0B53 /* LDXLoadMoreViewProtocol.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -220,6 +227,7 @@
 				0C9411A920793FA6007ECDD1 /* UITableView+LDXRefresh.m in Sources */,
 				0C81720B207505A80098D546 /* ViewController.m in Sources */,
 				0C9411A820793EB6007ECDD1 /* LDXLoadMoreController.m in Sources */,
+				0CBBCE5E207D2AA800BE0B53 /* UITableView+LDXLoadMore.m in Sources */,
 				0C9411A0207921C4007ECDD1 /* LDXRefreshController.m in Sources */,
 				0C817216207505A90098D546 /* main.m in Sources */,
 				0C81724920755D490098D546 /* LDXTableViewHeaderView.m in Sources */,
@@ -365,13 +373,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z5E3E2D8FE;
+				DEVELOPMENT_TEAM = ZB978L2WLM;
 				INFOPLIST_FILE = "$(SRCROOT)/LDXTableviewRefresh/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.liudongxu.testTableview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liudongxu.tableview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -383,13 +392,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z5E3E2D8FE;
+				DEVELOPMENT_TEAM = ZB978L2WLM;
 				INFOPLIST_FILE = "$(SRCROOT)/LDXTableviewRefresh/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.liudongxu.testTableview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liudongxu.tableview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

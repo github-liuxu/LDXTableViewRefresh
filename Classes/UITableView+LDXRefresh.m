@@ -10,31 +10,15 @@
 #import "LDXRefreshController.h"
 #import <objc/runtime.h>
 
-//static const void *kLDXRefreshBlock = @"kLDXRefreshBlock";
-//static const void *kLDXRefreshState = @"kLDXRefreshState";
-//static const void *kLDXRefreshView = @"kLDXRefreshView";
-//static const void *kLDXRefreshFinishStateTime = @"kLDXRefreshFinishStateTime";
-//static const void *kLDXRefreshOffsetY = @"kLDXRefreshOffsetY";
 static const void *kLDXRefreshController = &kLDXRefreshController;
 
 
 @implementation UITableView (LDXRefresh)
 
 - (void)ldx_installRefreshBlock:(void(^)(void))block {
-    LDXRefreshController *controller = [[LDXRefreshController alloc] initWithTableView:self];
-    [controller ldx_installRefreshBlock:block];
-    objc_setAssociatedObject(self, kLDXRefreshController, controller, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-//    [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:(__bridge void * _Nullable)self];
-//
-//    objc_setAssociatedObject(self, kLDXRefreshBlock, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
-//
-//    objc_setAssociatedObject(self, kLDXRefreshState, @(LDXRefreshNormal), OBJC_ASSOCIATION_RETAIN);
-//    LDXRefreshView *ldx_refreshView = [[LDXRefreshView alloc] initWithFrame:CGRectMake(0, -78, self.frame.size.width, 78)];
-//    [self addSubview:ldx_refreshView];
-//
-//    objc_setAssociatedObject(self, kLDXRefreshView, ldx_refreshView, OBJC_ASSOCIATION_RETAIN);
-//    objc_setAssociatedObject(self, kLDXRefreshOffsetY, @(-78), OBJC_ASSOCIATION_RETAIN);
+    LDXRefreshController *ldx_controller = [[LDXRefreshController alloc] initWithTableView:self];
+    [ldx_controller ldx_installRefreshBlock:block];
+    objc_setAssociatedObject(self, kLDXRefreshController, ldx_controller, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
 }
 

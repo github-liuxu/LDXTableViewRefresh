@@ -1,24 +1,15 @@
 //
-//  LDXLoadMoreController.h
+//  UITableView+LDXLoadMore.h
 //  LDXTableviewRefresh
 //
-//  Created by 刘东旭 on 2018/4/8.
+//  Created by 刘东旭 on 2018/4/11.
 //  Copyright © 2018年 刘东旭. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "LDXLoadMoreViewProtocol.h"
-@import UIKit;
 
-@interface LDXLoadMoreController : NSObject
-
-/**
- 为TableView初始化一个控制器
- 
- @param tableView 需要加上拉加载更多控制器的视图
- @return 控制器对象
- */
-- (instancetype)initWithTableView:(UITableView *)tableView;
+@interface UITableView (LDXLoadMore)
 
 /**
  安装上拉加载更多的组件
@@ -38,7 +29,7 @@
 - (void)ldx_finishLoadMore;
 
 /**
- 设置触发上拉加载更多的高度，超过这个偏移量松手会出发上拉加载更多
+ 设置触发上拉加载更多的向上偏移量，达到这个偏移量松手会出发上拉加载更多
  
  @param height 默认为44
  */

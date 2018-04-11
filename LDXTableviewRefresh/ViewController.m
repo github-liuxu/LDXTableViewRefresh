@@ -9,7 +9,7 @@
 #import "ViewController.h"
 //#import "LDXRefreshController.h"
 #import "UITableView+LDXRefresh.h"
-//#import "UITableView+LDXLoadMore.h"
+#import "UITableView+LDXLoadMore.h"
 //#import "LDXTableViewHeaderView.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>{
@@ -55,9 +55,12 @@
 //    view.backgroundColor = [UIColor blueColor];
 //    [tableView ldx_setCustomRefreshView:view];
     
-//    [tableView ldx_installLoadMoreBlock:^{
-//
-//    }];
+    [tableView ldx_installLoadMoreBlock:^{
+        NSLog(@"加载更多");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakTableView ldx_finishLoadMore];
+        });
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

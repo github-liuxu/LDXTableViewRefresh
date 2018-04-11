@@ -32,4 +32,9 @@
  */
 - (void)ldx_refreshFinish;
 
+/**
+ 结束刷新
+ */
+- (void)ldx_endRefresh;
+
 @end
