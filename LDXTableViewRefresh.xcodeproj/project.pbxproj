@@ -91,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				0C59CA8F20761E04000B9FFC /* Classes */,
-				0C817205207505A80098D546 /* LDXTableviewRefresh */,
+				0C817205207505A80098D546 /* LDXTableViewRefresh */,
 				0C817204207505A80098D546 /* Products */,
 				05F851ABE73C8F69E9C55915 /* Pods */,
 				9C9BCBFB36C95648A7196E3D /* Frameworks */,
@@ -106,7 +106,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0C817205207505A80098D546 /* LDXTableviewRefresh */ = {
+		0C817205207505A80098D546 /* LDXTableViewRefresh */ = {
 			isa = PBXGroup;
 			children = (
 				0C817206207505A80098D546 /* AppDelegate.h */,
@@ -121,7 +121,7 @@
 				0C817214207505A90098D546 /* Info.plist */,
 				0C817215207505A90098D546 /* main.m */,
 			);
-			path = LDXTableviewRefresh;
+			path = LDXTableViewRefresh;
 			sourceTree = "<group>";
 		};
 		9C9BCBFB36C95648A7196E3D /* Frameworks */ = {
@@ -167,7 +167,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0C8171FE207505A80098D546 /* Build configuration list for PBXProject "LDXTableviewRefresh" */;
+			buildConfigurationList = 0C8171FE207505A80098D546 /* Build configuration list for PBXProject "LDXTableViewRefresh" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -408,7 +408,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0C8171FE207505A80098D546 /* Build configuration list for PBXProject "LDXTableviewRefresh" */ = {
+		0C8171FE207505A80098D546 /* Build configuration list for PBXProject "LDXTableViewRefresh" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0C817217207505A90098D546 /* Debug */,
