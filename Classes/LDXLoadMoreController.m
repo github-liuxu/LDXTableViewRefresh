@@ -71,7 +71,9 @@ typedef enum : NSUInteger {
 
 - (void)dealloc {
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
-    [self.tableView removeObserver:self forKeyPath:@"contentSize"];
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        [self.tableView removeObserver:self forKeyPath:@"contentSize"];
+    }
 }
 
 /**
@@ -85,8 +87,14 @@ typedef enum : NSUInteger {
         self.tableView = tableView;
         self.loadMoreState = LDXLoadMoreNormal;
         self.loadMoreHeight = 44;
-        self.loadMoreView = [[LDXLoadMoreView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height + self.loadMoreHeight, self.tableView.frame.size.width, self.loadMoreHeight)];
-        [self.tableView addSubview:self.loadMoreView];
+        if (self.loadMoreMode == LDXLoadMoreFooter) {
+            self.loadMoreView = [[LDXLoadMoreView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, self.loadMoreHeight)];
+            self.tableView.tableFooterView = self.loadMoreView;
+        } else {
+            self.loadMoreView = [[LDXLoadMoreView alloc] initWithFrame:CGRectMake(0, self.tableView.frame.size.height + self.loadMoreHeight, self.tableView.frame.size.width, self.loadMoreHeight)];
+            [self.tableView addSubview:self.loadMoreView];
+        }
+        
     }
     return self;
 }
@@ -99,14 +107,20 @@ typedef enum : NSUInteger {
 - (void)ldx_installLoadMoreBlock:(void(^)(void))block {
     self.loadMoreBlock = block;
     [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-    [self.tableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        [self.tableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+    }
 }
 
 /**
  移除上拉加载更多组件
  */
 - (void)ldx_removeLoadMore {
-    [self.loadMoreView removeFromSuperview];
+    if (self.loadMoreMode == LDXLoadMoreFooter) {
+        self.tableView.tableFooterView = nil;
+    } else {
+        [self.loadMoreView removeFromSuperview];
+    }
     self.loadMoreView = nil;
 }
 
@@ -117,12 +131,18 @@ typedef enum : NSUInteger {
     [self.loadMoreView performSelector:@selector(ldx_loadMoreFinish)];
     self.loadMoreState = LDXLoadMoreFinish;
     
-    [UIView animateWithDuration:0.3 delay:self.loadMoreFinishStateTime options:UIViewAnimationOptionTransitionNone animations:^{
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    } completion:^(BOOL finished) {
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        [UIView animateWithDuration:0.3 delay:self.loadMoreFinishStateTime options:UIViewAnimationOptionTransitionNone animations:^{
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        } completion:^(BOOL finished) {
+            self.loadMoreState = LDXLoadMoreNormal;
+            [self.loadMoreView performSelector:@selector(ldx_endLoadMore)];
+        }];
+    } else {
         self.loadMoreState = LDXLoadMoreNormal;
         [self.loadMoreView performSelector:@selector(ldx_endLoadMore)];
-    }];
+    }
+    
 }
 
 /**
@@ -132,7 +152,11 @@ typedef enum : NSUInteger {
  */
 - (void)ldx_setLoadMoreHeight:(CGFloat)height {
     self.loadMoreHeight = height;
-    self.loadMoreView.frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.frame.size.width, height);
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        self.loadMoreView.frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.frame.size.width, height);
+    } else {
+        self.loadMoreView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, height);
+    }
 }
 
 /**
@@ -151,27 +175,45 @@ typedef enum : NSUInteger {
  */
 - (void)ldx_setCustomLoadMoreView:(UIView<LDXLoadMoreViewProtocol> *)customView {
     [self ldx_removeLoadMore];
-    [self.tableView addSubview:customView];
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        [self.tableView addSubview:customView];
+    } else {
+        self.tableView.tableFooterView = customView;
+    }
     self.loadMoreView = (LDXLoadMoreView*)customView;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"contentOffset"]) {
-        CGFloat offsetY = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue].y;
-        [self.loadMoreView ldx_loadMoreOffsetY:offsetY];
-        if (offsetY+self.tableView.frame.size.height >= self.tableView.contentSize.height+self.loadMoreHeight && self.loadMoreState == LDXLoadMoreNormal && !self.tableView.isDragging) {
-            self.loadMoreState = LDXLoadingMore;
-            [self.loadMoreView ldx_loadingMore];
-            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.loadMoreHeight-1, 0);
-            !self.loadMoreBlock?:self.loadMoreBlock();
-        }
-    } else if ([keyPath isEqualToString:@"contentSize"]) {
-        if (self.loadMoreState == LDXLoadMoreNormal) {
-            CGFloat sizeH = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue].height;
-            self.loadMoreView.frame = CGRectMake(0, sizeH, self.tableView.frame.size.width, self.loadMoreHeight);
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        if ([keyPath isEqualToString:@"contentOffset"]) {
+            CGFloat offsetY = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue].y;
+            [self.loadMoreView ldx_loadMoreOffsetY:offsetY];
+            if (offsetY+self.tableView.frame.size.height >= self.tableView.contentSize.height+self.loadMoreHeight && self.loadMoreState == LDXLoadMoreNormal && !self.tableView.isDragging) {
+                self.loadMoreState = LDXLoadingMore;
+                [self.loadMoreView ldx_loadingMore];
+                self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.loadMoreHeight-1, 0);
+                !self.loadMoreBlock?:self.loadMoreBlock();
+            }
+        } else if ([keyPath isEqualToString:@"contentSize"]) {
+            if (self.loadMoreState == LDXLoadMoreNormal) {
+                CGFloat sizeH = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue].height;
+                self.loadMoreView.frame = CGRectMake(0, sizeH, self.tableView.frame.size.width, self.loadMoreHeight);
+            }
+        } else {
+            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         }
     } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        if ([keyPath isEqualToString:@"contentOffset"]) {
+            CGFloat offsetY = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue].y;
+            [self.loadMoreView ldx_loadMoreOffsetY:offsetY];
+            if (offsetY > self.tableView.contentSize.height-self.tableView.frame.size.height-self.loadMoreHeight && self.loadMoreState == LDXLoadMoreNormal && !self.tableView.isDragging) {
+                self.loadMoreState = LDXLoadingMore;
+                [self.loadMoreView ldx_loadingMore];
+                !self.loadMoreBlock?:self.loadMoreBlock();
+            }
+        } else {
+            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        }
     }
 }
 

@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "LDXLoadMoreViewProtocol.h"
+#import "LDXLoadMoreController.h"
 
 @interface UITableView (LDXLoadMore)
+
+/**
+ 上拉加载更多加到tableViewFooter上还是tableView上
+ */
+- (void)setLoadMoreMode:(LDXLoadMoreMode)loadMoreMode;
 
 /**
  安装上拉加载更多的组件

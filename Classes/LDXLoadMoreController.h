@@ -10,7 +10,17 @@
 #import "LDXLoadMoreViewProtocol.h"
 @import UIKit;
 
+typedef NS_ENUM(NSUInteger, LDXLoadMoreMode) {
+    LDXLoadMoreFooter,
+    LDXLoadMoreTableView,
+};
+
 @interface LDXLoadMoreController : NSObject
+
+/**
+ 上拉加载更多加到tableViewFooter上还是tableView上
+ */
+@property (nonatomic, assign) LDXLoadMoreMode loadMoreMode;
 
 /**
  为TableView初始化一个控制器

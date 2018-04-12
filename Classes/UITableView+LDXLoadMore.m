@@ -15,14 +15,33 @@ static const void *kLDXLoadMoreController = &kLDXLoadMoreController;
 @implementation UITableView (LDXLoadMore)
 
 /**
+ 上拉加载更多加到tableViewFooter上还是tableView上
+ */
+- (void)setLoadMoreMode:(LDXLoadMoreMode)loadMoreMode {
+    LDXLoadMoreController *ldx_loadMoreController = objc_getAssociatedObject(self, kLDXLoadMoreController);
+    if (ldx_loadMoreController) {
+        ldx_loadMoreController.loadMoreMode = loadMoreMode;
+    } else {
+        LDXLoadMoreController *ldx_loadMoreController = [[LDXLoadMoreController alloc] initWithTableView:self];
+        objc_setAssociatedObject(self, kLDXLoadMoreController, ldx_loadMoreController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+/**
  安装上拉加载更多的组件
  
  @param block 上拉加载更多的block
  */
 - (void)ldx_installLoadMoreBlock:(void(^)(void))block {
-    LDXLoadMoreController *ldx_loadMoreController = [[LDXLoadMoreController alloc] initWithTableView:self];
-    [ldx_loadMoreController ldx_installLoadMoreBlock:block];
-    objc_setAssociatedObject(self, kLDXLoadMoreController, ldx_loadMoreController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    LDXLoadMoreController *ldx_loadMoreController = objc_getAssociatedObject(self, kLDXLoadMoreController);
+    if (ldx_loadMoreController) {
+        [ldx_loadMoreController ldx_installLoadMoreBlock:block];
+        objc_setAssociatedObject(self, kLDXLoadMoreController, ldx_loadMoreController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    } else {
+        LDXLoadMoreController *ldx_loadMoreController = [[LDXLoadMoreController alloc] initWithTableView:self];
+        [ldx_loadMoreController ldx_installLoadMoreBlock:block];
+        objc_setAssociatedObject(self, kLDXLoadMoreController, ldx_loadMoreController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
 }
 
 /**
