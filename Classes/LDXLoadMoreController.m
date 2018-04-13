@@ -23,6 +23,7 @@ typedef enum : NSUInteger {
 - (void)ldx_loadingMore;
 - (void)ldx_loadMoreFinish;
 - (void)ldx_endLoadMore;
+- (void)ldx_noMoreData:(NSString *)noMoreDataString;
 
 @end
 
@@ -54,6 +55,10 @@ typedef enum : NSUInteger {
     self.label.text = @"上拉加载更多";
 }
 
+- (void)ldx_noMoreData:(NSString *)noMoreDataString {
+    self.label.text = noMoreDataString;
+}
+
 @end
 
 @interface LDXLoadMoreController()
@@ -62,7 +67,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy) void(^loadMoreBlock)(void);
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, strong) LDXLoadMoreView *loadMoreView;
-@property (nonatomic, assign) CGFloat loadMoreFinishStateTime;
+@property (nonatomic, strong) NSString *noMoreDataString;
 @property (nonatomic, assign) CGFloat loadMoreHeight;
 
 @end
@@ -132,7 +137,7 @@ typedef enum : NSUInteger {
     self.loadMoreState = LDXLoadMoreFinish;
     
     if (self.loadMoreMode == LDXLoadMoreTableView) {
-        [UIView animateWithDuration:0.3 delay:self.loadMoreFinishStateTime options:UIViewAnimationOptionTransitionNone animations:^{
+        [UIView animateWithDuration:0.3 animations:^{
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         } completion:^(BOOL finished) {
             self.loadMoreState = LDXLoadMoreNormal;
@@ -160,12 +165,22 @@ typedef enum : NSUInteger {
 }
 
 /**
- 设置上拉加载更多完成状态的显示时间
+ 没有更多数据
  
- @param displayTime 上拉加载更多完成状态的显示时间默认0秒
+ @param noMoreDataString 没有更多数据的文字
  */
-- (void)ldx_setFinishStateDisplayTime:(CGFloat)displayTime {
-    self.loadMoreFinishStateTime = displayTime;
+- (void)ldx_setNoMoreData:(NSString *)noMoreDataString {
+    self.noMoreDataString = noMoreDataString;
+    
+    if (self.loadMoreMode == LDXLoadMoreTableView) {
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.loadMoreHeight, 0);
+        [self.loadMoreView performSelector:@selector(ldx_endLoadMore)];
+    } else {
+        [self.loadMoreView performSelector:@selector(ldx_endLoadMore)];
+    }
+    
+    [self.loadMoreView performSelector:@selector(ldx_noMoreData:) withObject:noMoreDataString];
+    self.loadMoreState = LDXLoadMoreFinish;
 }
 
 /**

@@ -55,11 +55,11 @@ typedef NS_ENUM(NSUInteger, LDXLoadMoreMode) {
 - (void)ldx_setLoadMoreHeight:(CGFloat)height;
 
 /**
- 设置上拉加载更多完成状态的显示时间
+ 没有更多数据
  
- @param displayTime 上拉加载更多完成状态的显示时间默认0秒
+ @param noMoreDataString 没有更多数据的文字
  */
-- (void)ldx_setFinishStateDisplayTime:(CGFloat)displayTime;
+- (void)ldx_setNoMoreData:(NSString *)noMoreDataString;
 
 /**
  设置自定义上拉加载更多视图

@@ -67,7 +67,8 @@
             [weakDatasource addObject:[NSString stringWithFormat:@"%d",i]];
         }
         [weakTableView reloadData];
-        [weakTableView ldx_finishLoadMore];
+//        [weakTableView ldx_finishLoadMore];
+        [weakTableView ldx_setNoMoreData:@"没有更多数据"];
     }];
     
     [tableView reloadData];
