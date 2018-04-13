@@ -37,4 +37,11 @@
  */
 - (void)ldx_endLoadMore;
 
+/**
+ 没有更多数据
+
+ @param noMoreDataString 没有更多数据的显示
+ */
+- (void)ldx_noMoreData:(NSString *)noMoreDataString;
+
 @end
